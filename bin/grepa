@@ -1,0 +1,7 @@
+#!/bin/sh
+QUERY="$1"
+echo ""
+grep -rIn --exclude-dir=.git --exclude-dir=.svn --exclude=*.raw $QUERY
+echo ""
+grep -rIo --exclude-dir=.git --exclude-dir=.svn --exclude=*.raw $QUERY | wc -l
+echo ""

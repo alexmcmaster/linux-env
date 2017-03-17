@@ -1,0 +1,15 @@
+#!/bin/bash
+RE='^[0-9]+$'
+NUM=11
+DIR=""
+if [ ! -z "$1" ]; then
+	if [[ $1 =~ $RE ]]; then
+		NUM=$(($1+1))
+	else
+		DIR=$1
+	fi
+fi
+if [ ! -z "$2" ]; then
+	DIR=$2
+fi
+ls -lht $DIR | head -n $NUM

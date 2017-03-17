@@ -1,0 +1,10 @@
+#!/bin/bash
+
+while true
+do
+	if [ `who | wc -l` -ne 1 ]; then
+		notify-send "Additional user detected!"
+		sleep 10
+	fi
+	sleep 1
+done

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+TIMESTAMP=$(date +%F)" "$(date +%T)
+
+printf "$TIMESTAMP -- $1\n\n" >> $NOTEFILE

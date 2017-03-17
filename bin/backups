@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ "$#" -eq 0 ]; then
+        cd $BACKUP_DIR
+	echo $BACKUP_DIR
+        ls -lth
+else
+        for query in "$@"
+        do
+                find $BACKUP_DIR -name "*$query*" -printf "%f\n"
+        done
+fi
+

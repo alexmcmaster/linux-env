@@ -1,0 +1,9 @@
+#!/bin/bash
+
+TIMESTAMP=$(date +%F)
+
+echo "Saving " $BACKUP_DIR/${1%/}-$TIMESTAMP.tar.gz...
+if ! [ -e $BACKUP_DIR/$(dirname "${1%/}") ]; then
+    mkdir $BACKUP_DIR/$(dirname "${1%/}")
+fi
+tar -czvf "$BACKUP_DIR/${1%/}-$TIMESTAMP.tar.gz" $1

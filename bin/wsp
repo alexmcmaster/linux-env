@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ "$#" -eq 0 ]; then
+	cd $WORKSPACE
+	ls
+else
+	for file in "$@"
+	do
+		cp -r "$file" $WORKSPACE
+	done
+fi
