@@ -1,0 +1,8 @@
+#!/bin/bash
+
+DIR='.'
+if [ ! -z "$1" ]; then
+	DIR=$1
+fi
+
+find $DIR -type d -name .git -not -path "./_irrelevant/*" -exec sh -c "echo && cd \"{}\"/../ && pwd && git pull" \;

@@ -1,3 +1,0 @@
-#!/bin/bash
-
-find . -type d -name .git -not -path "./_irrelevant/*" -exec sh -c "echo && cd \"{}\"/../ && pwd && git pull" \;
