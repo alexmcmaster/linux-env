@@ -1,3 +1,8 @@
 #!/bin/bash
 
-ls -l | wc -l
+DIR="."
+if [ ! -z "$1" ]; then
+	DIR=$1
+fi
+
+ls -l $DIR | wc -l
