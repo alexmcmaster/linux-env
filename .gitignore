@@ -3,7 +3,6 @@
 .apport-ignore.xml
 .astropy/
 .backups/
-.bash_aliases
 .bash_history
 .bash_logout
 .buildroot-ccache/

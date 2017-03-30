@@ -1,5 +1,8 @@
 #!/bin/bash
-LIMIT=$1
+LIMIT=1
+if [ ! -z "$1" ]; then
+	LIMIT=$1
+fi
 P=$PWD
 for ((i=1; i <= LIMIT; i++))
 do
