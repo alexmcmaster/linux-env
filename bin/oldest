@@ -12,4 +12,4 @@ fi
 if [ ! -z "$2" ]; then
 	DIR=$2
 fi
-ls -lht $DIR | tail -n $NUM
+ls -lht --color=always $DIR | tail -n $NUM

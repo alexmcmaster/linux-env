@@ -3,7 +3,7 @@
 if [ "$#" -eq 0 ]; then
         cd $BACKUP_DIR
 	echo $BACKUP_DIR
-        ls -lth
+        ls -lth --color=always
 else
         for query in "$@"
         do

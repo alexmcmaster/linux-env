@@ -2,7 +2,7 @@
 
 if [ "$#" -eq 0 ]; then
 	cd $WORKSPACE
-	ls
+	ls --color=always
 else
 	for file in "$@"
 	do
