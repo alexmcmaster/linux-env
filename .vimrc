@@ -8,3 +8,5 @@ autocmd FileType xml setlocal tabstop=2 softtabstop=0 expandtab shiftwidth=2 sma
 highlight OverLength ctermbg=131
 "ctermfg=white
 match OverLength /\%81v.\+/
+
+set number
