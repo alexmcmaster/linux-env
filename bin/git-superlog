@@ -1,0 +1,50 @@
+#!/bin/bash
+set -ue
+
+# Input arguments to the git-log script
+in_args="$*"
+
+# Output arguments to the `git log` command
+out_args=
+
+# Custom pretty format:
+#   * short commit SHA
+#   * date (unless suppressed with '--no-date')
+#   * truncated author email
+#   * commit subject
+#   * branches
+# Pretty contains spaces which shells have problems processing correctly, so it
+# is its own variable
+pretty_arg="--pretty=format:%C(auto)%h %ad %<(5,trunc)%ae %s %d"
+
+# Remove the date if user passes '--no-date'
+regex="(.*)--no-date(.*)"
+if [[ $in_args =~ $regex ]]; then
+    in_args="${BASH_REMATCH[1]}${BASH_REMATCH[2]}"
+    regex="^(.*) %ad(.*)$"
+    [[ $pretty_arg =~ $regex ]]
+    pretty_arg="${BASH_REMATCH[1]}${BASH_REMATCH[2]}"
+else
+    # Format the date to be really short
+    out_args+=" --date=short"
+fi
+
+# Use '--all' by default unless user passes '--no-all'
+regex="(.*)--no-all(.*)"
+if [[ $in_args =~ $regex ]]; then
+    in_args="${BASH_REMATCH[1]}${BASH_REMATCH[2]}"
+else
+    # Show history for all banches
+    out_args+=" --all"
+fi
+
+# Adds the pretty lines to the left
+out_args+=" --graph"
+
+# Append arguments passed in by user
+out_args+=" $in_args"
+
+# Run the log command
+#set -x
+git log "$pretty_arg" $out_args --exclude='*-bak*'
+
