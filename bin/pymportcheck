@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+"""pymportcheck
+
+This script searches one or more python source code files for superfluous
+imports, that is, objects that are imported but not used and can be removed.
+
+"""
+
+import sys
+import logging
+import os
+import glob
+
+def remove_backslashes(l):
+    return [i for i in l if '\\' not in i]
+
+def extract_modules(line):
+    if 'import' not in line:
+        return tuple()
+    elif line.startswith('import '):
+        if ' as ' in line:
+            line = line[line.index(' as ')+1:]
+        tmp = remove_backslashes(''.join(line.split(' ')[1:]).split(','))
+        return tuple(t.strip() for t in tmp)
+    return tuple()
+
+def extract_imports(line):
+    if 'import' not in line:
+        return tuple()
+    elif line.startswith('from '):
+        if '*' in line:
+            logging.warning("'import *' line detected, ignoring")
+            return tuple()
+        tmp = line.split(' ')
+        if 'import' not in tmp[2]:
+            logging.warning("malformed line detected, ignoring")
+            return tuple()
+        tmp = remove_backslashes(''.join(tmp[3:]).split(','))
+        return tuple(t.strip() for t in tmp)
+    return tuple()
+
+def module_in_line(line, module):
+    return ''.join((module, '.')) in line
+
+def import_in_line(line, item):
+    return item in line
+
+def print_results(unused_modules, unused_imports):
+    res = unused_modules + unused_imports
+    if len(res) == 0:
+        print("No unused modules/imports!")
+    else:
+        print("Unused modules/imports:")
+        for item in res:
+            print(item)
+
+def is_pyfile(fn):
+    return os.path.isfile(fn) and fn.endswith('.py')
+
+def get_pyfiles(arg):
+    print(arg)
+    if os.path.isfile(arg):
+        return [arg] if is_pyfile(arg) else []
+    elif os.path.isdir(arg):
+        subfiles = []
+        for folder, subfolders, files in os.walk(arg):
+            path = os.path.abspath(folder)
+            for fn in files:
+                subfiles.append(os.path.join(path, fn))
+        return [fn for fn in subfiles if is_pyfile(fn)]
+
+def process_file(fn):
+    with open(fn, 'r') as f:
+        lines = f.readlines()
+
+    modules, imports = [], []
+    for line in lines:
+        modules.extend(extract_modules(line))
+        imports.extend(extract_imports(line))
+
+    used_modules, used_imports = [], []
+    for line in lines:
+        for module in modules:
+            if module_in_line(line, module):
+                used_modules.append(module)
+        for item in imports:
+            if import_in_line(line, item):
+                used_imports.append(item)
+
+    unused_modules = [module for module in modules if module not in used_modules]
+    unused_imports = [item for item in imports if item not in used_imports]
+
+    print_results(unused_modules, unused_imports)
+
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        logging.error("must specify a source file")
+        exit(1)
+
+    pyfiles = []
+    for arg in sys.argv[1:]:
+        pyfiles.extend(get_pyfiles(arg))
+
+    for fn in pyfiles:
+        print("{}...".format(fn))
+        process_file(fn)
+        print()
