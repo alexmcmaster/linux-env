@@ -9,7 +9,6 @@ imports, that is, objects that are imported but not used and can be removed.
 import sys
 import logging
 import os
-import glob
 
 def remove_backslashes(l):
     return [i for i in l if '\\' not in i]
@@ -45,17 +44,21 @@ def module_in_line(line, module):
 def import_in_line(line, item):
     return item in line
 
-def print_results(unused_modules, unused_imports):
-    res = unused_modules + unused_imports
-    if len(res) == 0:
-        print("No unused modules/imports!")
-    else:
-        print("Unused modules/imports:")
-        for item in res:
-            print(item)
-
 def is_pyfile(fn):
-    return os.path.isfile(fn) and fn.endswith('.py')
+    if os.path.isfile(fn):
+        if fn.endswith('.py'):
+            return True
+        try:
+            with open(fn) as f:
+                try:
+                    first_line = f.readline()
+                except UnicodeDecodeError as err:
+                    return False
+            if '#!' in first_line and 'python' in first_line:
+                return True
+        except Exception as err:
+            logging.error("ignoring error:{}".format(err))
+    return False
 
 def get_pyfiles(arg):
     print(arg)
@@ -71,7 +74,10 @@ def get_pyfiles(arg):
 
 def process_file(fn):
     with open(fn, 'r') as f:
-        lines = f.readlines()
+        try:
+            lines = f.readlines()
+        except UnicodeDecodeError as err:
+            return [], []
 
     modules, imports = [], []
     for line in lines:
@@ -90,18 +96,31 @@ def process_file(fn):
     unused_modules = [module for module in modules if module not in used_modules]
     unused_imports = [item for item in imports if item not in used_imports]
 
-    print_results(unused_modules, unused_imports)
+    return unused_modules, unused_imports
+
+def print_results(unused_modules, unused_imports):
+    res = unused_modules + unused_imports
+    if len(res) == 0:
+        print("No unused modules/imports!")
+    else:
+        print("Unused modules/imports:")
+        for item in res:
+            print(item)
 
 if __name__ == '__main__':
+    logging.basicConfig(level='ERROR')
+
     if len(sys.argv) < 2:
-        logging.error("must specify a source file")
-        exit(1)
+        args = ['.']
+    else:
+        args = sys.argv[1:]
 
     pyfiles = []
-    for arg in sys.argv[1:]:
+    for arg in args:
         pyfiles.extend(get_pyfiles(arg))
 
     for fn in pyfiles:
         print("{}...".format(fn))
-        process_file(fn)
+        unused_modules, unused_imports = process_file(fn)
+        print_results(unused_modules, unused_imports)
         print()
