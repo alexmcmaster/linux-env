@@ -5,5 +5,4 @@ URL="http://download.finance.yahoo.com/d/quotes.csv?s=$SYMBOLS&f=l1"
 
 RES=`curl -s $URL`
 
-echo $SYMBOLS | sed 's/,/\t/g'
-echo $RES | sed 's/ /\t/g'
+/usr/bin/env python3 ticker.py $SYMBOLS $RES

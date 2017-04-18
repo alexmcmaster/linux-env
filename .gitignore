@@ -63,3 +63,4 @@ sherpa-releases/
 yEd/
 *.*.swp
 .elinks/
+*/__pycache__/
