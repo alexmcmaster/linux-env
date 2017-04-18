@@ -5,4 +5,5 @@ URL="http://download.finance.yahoo.com/d/quotes.csv?s=$SYMBOLS&f=l1"
 
 RES=`curl -s $URL`
 
-/usr/bin/env python3 ticker.py $SYMBOLS $RES
+# TODO: make ticker an actual module and install
+/usr/bin/env python3 ~/bin/ticker.py $SYMBOLS $RES
