@@ -98,6 +98,13 @@ def process_file(fn):
 
     return unused_modules, unused_imports
 
+def scolor(s, color='red'):
+    color_dict = {
+        'red': '\033[0;31m',
+        'yellow': '\033[0;33m'
+    }
+    return color_dict[color] + s + '\033[0m'
+
 def print_results(unused_modules, unused_imports):
     res = unused_modules + unused_imports
     if len(res) == 0:
@@ -105,7 +112,7 @@ def print_results(unused_modules, unused_imports):
     else:
         print("Unused modules/imports:")
         for item in res:
-            print(item)
+            print(scolor(item, color='red'))
 
 if __name__ == '__main__':
     logging.basicConfig(level='ERROR')
