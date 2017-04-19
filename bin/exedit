@@ -1,3 +1,18 @@
 #!/bin/bash
 
-vim `which $1`
+FN=""
+if [ ! -z "$1" ]; then
+        FN=$1
+else
+	echo "You need to enter a filename."
+	exit
+fi
+
+FULLPATH=`which $FN`
+
+if [ "$FULLPATH" == "" ]; then
+	echo "Couldn't find \"$1\" on PATH."
+	exit
+fi
+
+vim $FULLPATH
