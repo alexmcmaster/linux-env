@@ -47,3 +47,5 @@ export BACKUP_DIR=/home/amcmaster/.backups
 if ! [ -e $BACKUP_DIR ]; then
     mkdir $BACKUP_DIR
 fi
+
+export PATH="$HOME/.cargo/bin:$PATH"

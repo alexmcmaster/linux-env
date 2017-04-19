@@ -64,3 +64,6 @@ yEd/
 *.*.swp
 .elinks/
 */__pycache__/
+.cargo/
+.multirust
+.rustup/
