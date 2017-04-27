@@ -67,3 +67,5 @@ yEd/
 .cargo/
 .multirust
 .rustup/
+.pylint-gui-history
+.pylint.d/
