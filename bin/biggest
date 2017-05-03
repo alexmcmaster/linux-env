@@ -12,4 +12,4 @@ fi
 if [ ! -z "$2" ]; then
 	DIR=$2
 fi
-ls -lhS --color=always $DIR | head -n $(($NUM/2))
+ls -lAhS --color=always $DIR | head -n $(($NUM))
