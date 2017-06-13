@@ -69,3 +69,10 @@ yEd/
 .rustup/
 .pylint-gui-history
 .pylint.d/
+.dbus/
+.gnuplot_history
+.rpmdb/
+.sudo_as_admin_successful
+amcmaster_SFI.ovpn
+fridays.txt
+st-notes.txt
