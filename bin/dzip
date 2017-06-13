@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DIR=$1
+
+zip -r "$DIR.zip" "$DIR"
