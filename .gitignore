@@ -76,3 +76,5 @@ yEd/
 amcmaster_SFI.ovpn
 fridays.txt
 st-notes.txt
+vpn-connect.sh
+vpn-disconnect.sh
