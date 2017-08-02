@@ -1,6 +1,11 @@
 #!/bin/bash
 
-SYMBOLS=$1
+if [ "$#" -eq 0 ]; then
+	SYMBOLS=$(< ~/.tickers)
+else
+	SYMBOLS=$1
+fi
+
 URL="http://download.finance.yahoo.com/d/quotes.csv?s=$SYMBOLS&f=l1"
 
 RES=`curl -s $URL`
