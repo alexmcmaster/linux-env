@@ -79,3 +79,4 @@ st-notes.txt
 vpn-connect.sh
 vpn-disconnect.sh
 .wine*
+.creds
