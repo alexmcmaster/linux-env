@@ -80,3 +80,4 @@ vpn-connect.sh
 vpn-disconnect.sh
 .wine*
 .creds
+.tickers
