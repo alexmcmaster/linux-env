@@ -1,0 +1,4 @@
+#!/bin/bash
+
+backup $1
+rm -rf $1

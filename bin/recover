@@ -1,0 +1,7 @@
+#!/bin/bash
+
+BACKUP=$1
+DEST=`realpath $2`
+
+cd $BACKUP_DIR
+tar xvzf $BACKUP -C $DEST
