@@ -82,3 +82,7 @@ vpn-disconnect.sh
 .creds
 .tickers
 .mysql*
+.cert/
+.nmcli-history
+.xboardrc
+xboard.debug
