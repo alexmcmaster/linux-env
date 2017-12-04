@@ -5,8 +5,11 @@ autocmd FileType python setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 
 autocmd FileType xml setlocal tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab
 
 " highlight long lines in red
-highlight OverLength ctermbg=131
+"highlight OverLength ctermbg=131
 "ctermfg=white
-match OverLength /\%81v.\+/
+"match OverLength /\%81v.\+/
+
+highlight ColorColumn ctermbg=red
+set colorcolumn=81
 
 set number
