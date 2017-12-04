@@ -86,3 +86,6 @@ vpn-disconnect.sh
 .nmcli-history
 .xboardrc
 xboard.debug
+.eclipse/
+SimplicityStudio/
+SimplicityStudio_v4/
