@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#TARGET=${%1/}
+TARGET=$1
+
+tar -I zstd -xf $TARGET && rm $TARGET

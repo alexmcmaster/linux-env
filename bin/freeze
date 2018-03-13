@@ -1,0 +1,5 @@
+#!/bin/bash
+
+TARGET=${1%/}
+
+tar -I zstd -cf $TARGET.tar.zst $TARGET && rm -rf $TARGET

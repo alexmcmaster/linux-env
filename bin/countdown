@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+
+import progressbar
+import sys
+import time
+
+RESOLUTION=100
+
+def help_and_exit():
+    print("countdown [duration]")
+
+try:
+    t = int(sys.argv[1])
+except Exception as err:
+    print(err)
+    help_and_exit()
+
+widgets = [
+    progressbar.Percentage(),
+    progressbar.RotatingMarker(),
+    progressbar.Bar(),
+    progressbar.ETA(),
+]
+
+bar = progressbar.ProgressBar(widgets=widgets)
+gen = bar(range(t*RESOLUTION))
+for _ in gen:
+    time.sleep(1/RESOLUTION)
