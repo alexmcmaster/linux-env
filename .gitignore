@@ -90,3 +90,7 @@ xboard.debug
 SimplicityStudio/
 SimplicityStudio_v4/
 .Xauthority
+.buildman
+.dmrc
+.nv/
+Music/
