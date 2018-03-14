@@ -2,32 +2,45 @@
 
 import sys
 import time
+import argparse
 
-def print_help():
-    print("slowprint filename period(ms)")
+parser = argparse.ArgumentParser(description='')
+parser.add_argument(
+    "-p",
+    dest="period",
+    type=int,
+    default=100,
+    help="Period in ms.")
+parser.add_argument(
+    "-b",
+    dest="bufsize",
+    type=int,
+    default=1,
+    help="Lines to print each period.")
+parser.add_argument(
+    "-s",
+    dest="startline",
+    type=int,
+    default=1,
+    help="Line to start at.")
+parser.add_argument(
+    "-n",
+    dest="linenumbers",
+    action="store_true",
+    help="Print line numbers with output")
+parser.add_argument("fn")
+args = parser.parse_args()
 
-try:
-    fn = sys.argv[1]
-except:
-    print_help()
-    exit(1)
-
-try:
-    period = int(sys.argv[2])
-except:
-    period = 100
-
-try:
-    bufsize = int(sys.argv[3])
-except:
-    bufsize = 1
-
-with open(fn) as f:
+with open(args.fn) as f:
     lines = f.readlines()
 
-for i in range(len(lines)):
-    print(lines[i], end="")
-    if (i+1) % bufsize == 0:
-        time.sleep(period/1000.0)
+for i in range(args.startline, len(lines)):
+    try:
+        print("{}\t{}".format(i if args.linenumbers else "", lines[i]), end="")
+        if (i+1) % args.bufsize == 0:
+            time.sleep(args.period/1000.0)
+    except KeyboardInterrupt:
+        print()
+        break
 
 exit(0)
