@@ -95,3 +95,6 @@ SimplicityStudio_v4/
 .nv/
 Music/
 *.tar.zst
+.ncftp/
+.openocd_history
+st-service-fsm.graphml
