@@ -21,31 +21,13 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-# set PATH so it includes matlab home directory if it exists
-if [ -d "$HOME/matlab" ] ; then
-    PATH="$HOME/matlab:$PATH"
-fi
-
-# set up PYTHONPATH
-PYTHONPATH="/usr/local/lib/python3.5/dist-packages/"
-export PYTHONPATH
-
-# set vim as default editor
+# make vim default editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-# define NOTEFILE file used by note, notes, and nedit in ~/bin
-export NOTEFILE="/home/amcmaster/.notes"
-if ! [ -e $NOTEFILE ]; then
-    touch $NOTEFILE
+export WORKSPACE="$HOME/Workspace"
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
 fi
-
-# define WORKSPACE directory used by wsp in ~/bin
-export WORKSPACE=~/Workspace
-
-export BACKUP_DIR=/home/amcmaster/.backups
-if ! [ -e $BACKUP_DIR ]; then
-    mkdir $BACKUP_DIR
-fi
-
-export PATH="$HOME/.cargo/bin:$PATH"
