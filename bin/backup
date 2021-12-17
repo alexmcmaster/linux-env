@@ -1,9 +1,23 @@
 #!/bin/bash
 
-TIMESTAMP=$(date +%F)
+RESTIC_BUCKET="b2:armc-xps-backup:/"
 
-echo "Saving " $BACKUP_DIR/${1%/}-$TIMESTAMP.tar.gz...
-if ! [ -e $BACKUP_DIR/$(dirname "${1%/}") ]; then
-    mkdir $BACKUP_DIR/$(dirname "${1%/}")
-fi
-tar -czvf "$BACKUP_DIR/${1%/}-$TIMESTAMP.tar.gz" $1
+echo "---------------Scheduled backup time---------------"
+echo ""
+#export $(sudo cat $HOME/.restic-env | xargs)
+source $HOME/.restic-env
+restic backup -r $RESTIC_BUCKET \
+	--verbose --exclude="$HOME/snap" --exclude="$HOME/vmware" \
+	--exclude="$HOME/.cache" \
+	/opt /bin /home
+echo ""
+echo "---------------Backup done, removing old snapshots---------------"
+echo ""
+restic forget -r $RESTIC_BUCKET --keep-weekly 10
+restic prune -r $RESTIC_BUCKET
+echo ""
+echo "---------------Old snapshots removed, verifying the data is restorable---------------"
+echo ""
+restic check -r $RESTIC_BUCKET
+echo ""
+echo "---------------Backup done and verified!---------------"
